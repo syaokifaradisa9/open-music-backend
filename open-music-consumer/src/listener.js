@@ -16,13 +16,15 @@ class Listener {
       const songs = await this.musicService.getSongsFromPlaylistId({ id: playlistId });
 
       const data = {
-        id: playlist.id,
-        name: playlist.name,
-        songs: songs.map((song) => ({
-          id: song.id,
-          title: song.title,
-          performer: song.performer,
-        })),
+        playlist: {
+          id: playlist.id,
+          name: playlist.name,
+          songs: songs.map((song) => ({
+            id: song.id,
+            title: song.title,
+            performer: song.performer,
+          })),
+        },
       };
 
       const result = await this.mailSender.sendEmail(targetEmail, JSON.stringify(data));
